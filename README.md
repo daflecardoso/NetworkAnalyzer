@@ -9,7 +9,7 @@
 
 Light mode             |  Dark mode
 :-------------------------:|:-------------------------:
-<img src="../master/light_example.gif" alt="My cool logo" width="200px"/>  |  <img src="../master/dark_example.gif" alt="My cool logo" width="200px"/>
+<img src="../master/light_example.gif" alt="Light mode" width="200px"/>  |  <img src="../master/dark_example.gif" alt="Dark mode" width="200px"/>
 
 
 
