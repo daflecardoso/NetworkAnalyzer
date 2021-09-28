@@ -10,7 +10,7 @@ import Foundation
 extension UIColor {
     
     public static var backgroundContainerViews: UIColor = {
-        let dark = UIColor(red: 17, green: 18, blue: 19, alpha: 1.0)
+        let dark = UIColor(red: 17/255, green: 18/255, blue: 19/255, alpha: 1.0)
         
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in

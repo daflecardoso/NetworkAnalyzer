@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .backgroundContainerViews
         inserEvent()
     
         setup()
@@ -34,10 +34,59 @@ class ViewController: UIViewController {
     private func inserEvent() {
         let baseUrl = "https://api.something.com"
         let path = "/some/path"
-        let headers = "\"Authorization\": \"Bearer 31cah32....\""
+        let headers = """
+{
+    "Authorization" : "Bearer d//eq324..."
+}
+"""
         let query = "some=data&something=anotherData"
-        let requestBody = "{\"firstName\": \"Network\" }"
-        let response = "{\"lasName\": \"Analyzer\" }"
+        let requestBody = """
+{
+    "firstName" : "Netowork"
+}
+"""
+        let response = """
+{
+  "vehicles" : [
+    {
+      "userId" : 24,
+      "cdnKey" : null,
+      "id" : 8,
+      "plate" : "NYP2929",
+      "ownerDocument" : "43070806880",
+      "imageUrl" : null,
+      "renavam" : "12345678999",
+      "updatedAt" : "2021-07-04T21:19:50.000Z",
+      "createdAt" : "2021-04-12T23:29:54.000Z",
+      "name" : "Mock 2 307"
+    },
+    {
+      "userId" : 24,
+      "cdnKey" : null,
+      "id" : 13,
+      "plate" : "NYP2929",
+      "ownerDocument" : "",
+      "imageUrl" : null,
+      "renavam" : "",
+      "updatedAt" : "2021-04-26T00:54:45.000Z",
+      "createdAt" : "2021-04-26T00:54:45.000Z",
+      "name" : "Mock C4"
+    },
+    {
+      "userId" : 25,
+      "cdnKey" : null,
+      "id" : 13,
+      "plate" : "NYP2929",
+      "ownerDocument" : "",
+      "imageUrl" : null,
+      "renavam" : "",
+      "updatedAt" : "2021-04-26T00:54:45.000Z",
+      "createdAt" : "2021-04-26T00:54:45.000Z",
+      "name" : "Mock C4"
+    }
+  ]
+}
+"""
         
         let event = NetworkAnalyzerData(baseUrl: baseUrl,
                                         method: "GET",

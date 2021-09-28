@@ -62,7 +62,7 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         return scrollView
     }()
     
-    private let font: UIFont = .regular(14)
+    private let font: UIFont = .regular(16)
     
     private lazy var linesLabel: UILabel = {
         let label = UILabel()
