@@ -20,6 +20,41 @@ it, simply add the following line to your Podfile:
 pod 'NetworkAnalyzer'
 ```
 
+## Usage
+
+Insert data event
+
+```swift
+private func inserEvent() {
+    let baseUrl = "https://api.something.com"
+    let path = "/some/path"
+    let headers = "\"Authorization\": \"Bearer 31cah32....\""
+    let query = "some=data&something=anotherData"
+    let requestBody = "{\"firstName\": \"Network\" }"
+    let response = "{\"lasName\": \"Analyzer\" }"
+
+    let event = NetworkAnalyzerData(baseUrl: baseUrl,
+                                    method: "GET",
+                                    path: path,
+                                    absoluteUrl: baseUrl + path,
+                                    headers: headers,
+                                    query: query,
+                                    requestBody: requestBody,
+                                    statusCode: 200,
+                                    response: response,
+                                    date: Date())
+    NetworkAnalyzer.shared.insert(event: event)
+}
+```
+
+Show network area example
+
+```swift
+let controller = NetworkAnalyzer.shared.makeNetworkAnalyzerViewController()
+let navigation = UINavigationController(rootViewController: controller)
+present(navigation, animated: true, completion: nil)
+```
+
 ## Author
 
 daflecardoso, daflesantos@gmail.com
