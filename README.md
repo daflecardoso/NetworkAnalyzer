@@ -1,4 +1,4 @@
-# NetworkAnalyzer 1.0.0
+# NetworkAnalyzer 1.1.0
 
 [![CI Status](https://img.shields.io/travis/daflecardoso/NetworkAnalyzer.svg?style=flat)](https://travis-ci.org/daflecardoso/NetworkAnalyzer)
 [![Version](https://img.shields.io/cocoapods/v/NetworkAnalyzer.svg?style=flat)](https://cocoapods.org/pods/NetworkAnalyzer)
@@ -6,6 +6,13 @@
 [![Platform](https://img.shields.io/cocoapods/p/NetworkAnalyzer.svg?style=flat)](https://cocoapods.org/pods/NetworkAnalyzer)
 
 ## Example
+
+Light mode             |  Dark mode
+:-------------------------:|:-------------------------:
+<img src="../master/light_example.gif" alt="My cool logo" width="200px"/>  |  <img src="../master/dark_example.gif" alt="My cool logo" width="200px"/>
+
+
+
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
