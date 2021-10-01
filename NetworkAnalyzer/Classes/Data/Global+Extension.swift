@@ -7,9 +7,9 @@
 
 import Foundation
 
-public protocol Appliable {}
+protocol Appliable {}
 
-public extension Appliable {
+extension Appliable {
     @discardableResult
     func apply(closure: (Self) -> Void) -> Self {
         closure(self)
@@ -17,9 +17,9 @@ public extension Appliable {
     }
 }
 
-public protocol Runnable {}
+protocol Runnable {}
 
-public extension Runnable {
+extension Runnable {
     @discardableResult
     func run<T>(closure: (Self) -> T) -> T {
         return closure(self)
@@ -29,12 +29,12 @@ public extension Runnable {
 extension NSObject: Appliable {}
 extension NSObject: Runnable {}
 
-public protocol ClassNameProtocol {
+protocol ClassNameProtocol {
     static var className: String { get }
     var className: String { get }
 }
 
-public extension ClassNameProtocol {
+extension ClassNameProtocol {
     static var className: String {
         return String(describing: self)
     }
