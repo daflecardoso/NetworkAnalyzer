@@ -88,6 +88,12 @@ class ViewController: UIViewController {
 }
 """
         
+        let pathFile = Bundle.main.path(forResource: "categories", ofType: "json") ?? ""
+        let data = try? Data(contentsOf: URL(fileURLWithPath: pathFile))
+        let json = String(data: data ?? Data(), encoding: .utf8) ?? ""
+        
+        print(json)
+        
         let event = NetworkAnalyzerData(baseUrl: baseUrl,
                                         method: "GET",
                                         path: path,
@@ -96,7 +102,7 @@ class ViewController: UIViewController {
                                         query: query,
                                         requestBody: requestBody,
                                         statusCode: 200,
-                                        response: response,
+                                        response: json,
                                         date: Date())
         NetworkAnalyzer.shared.insert(event: event)
     }

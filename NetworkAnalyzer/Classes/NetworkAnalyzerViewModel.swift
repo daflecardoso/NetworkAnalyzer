@@ -10,12 +10,25 @@ import Foundation
 
 public class NetworkAnalyzerViewModel {
     
-    var items: [NetworkAnalyzerData] {
-        let events: [NetworkAnalyzerData]? = Cache.shared.get(forKey: .networkEvents)
-        return events ?? []
+    var onFetched: (() -> Void)?
+    internal var loading: ((Bool) -> Void)?
+    
+    private(set) var items: [NetworkAnalyzerData] = []
+    
+    func fetch() {
+        loading?(true)
+        DispatchQueue.global(qos: .background).async { [unowned self] in
+            let events: [NetworkAnalyzerData]? = Cache.shared.get(forKey: .networkEvents)
+            self.items = events ?? []
+            DispatchQueue.main.async {
+                loading?(false)
+                self.onFetched?()
+            }
+        }
     }
     
     func cleanHistory() {
         Cache.shared.remove(forKey: .networkEvents)
+        fetch()
     }
 }

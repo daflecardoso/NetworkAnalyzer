@@ -13,6 +13,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		D2E9D3D4270DFD5200E46364 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = D2E9D3D3270DFD5200E46364 /* categories.json */; };
+		D2E9D3D6270DFD9800E46364 /* home.json in Resources */ = {isa = PBXBuildFile; fileRef = D2E9D3D5270DFD9800E46364 /* home.json */; };
 		E672873254688F49418A8CD6 /* Pods_NetworkAnalyzer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C0622A02F6687A87366AE5 /* Pods_NetworkAnalyzer_Tests.framework */; };
 		F7F32B4815E4509243DF0A95 /* Pods_NetworkAnalyzer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A158FCBE045A08C49641C57C /* Pods_NetworkAnalyzer_Example.framework */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,8 @@
 		9AE4EC2979F70430F38460B6 /* Pods-NetworkAnalyzer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkAnalyzer_Example.release.xcconfig"; path = "Target Support Files/Pods-NetworkAnalyzer_Example/Pods-NetworkAnalyzer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		A158FCBE045A08C49641C57C /* Pods_NetworkAnalyzer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetworkAnalyzer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C3ADC12D53993492C87165 /* Pods-NetworkAnalyzer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkAnalyzer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NetworkAnalyzer_Tests/Pods-NetworkAnalyzer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		D2E9D3D3270DFD5200E46364 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		D2E9D3D5270DFD9800E46364 /* home.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = home.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,8 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				D2E9D3D3270DFD5200E46364 /* categories.json */,
+				D2E9D3D5270DFD9800E46364 /* home.json */,
 			);
 			name = "Example for NetworkAnalyzer";
 			path = NetworkAnalyzer;
@@ -246,7 +252,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E9D3D6270DFD9800E46364 /* home.json in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				D2E9D3D4270DFD5200E46364 /* categories.json in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);

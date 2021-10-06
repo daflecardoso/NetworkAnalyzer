@@ -14,6 +14,12 @@ public class NetworkAnalyzerViewController: UIViewController {
 
     private let cell = NetworkAnalyzerCell.self
     
+    private lazy var activityIndicator = UIActivityIndicatorView().apply {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.startAnimating()
+        $0.isHidden = true
+    }
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,12 +42,15 @@ public class NetworkAnalyzerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        
+        viewModel.fetch()
     }
     
     private func setup() {
         setupView()
         setupDeleteButton()
         setupConstraints()
+        setupBinds()
     }
     
     private func setupView() {
@@ -53,6 +62,15 @@ public class NetworkAnalyzerViewController: UIViewController {
                                                                    selector: #selector(didTapDelete))
     }
     
+    private func setupBinds() {
+        viewModel.onFetched = { [unowned self] in
+            self.tableView.reloadData()
+        }
+        viewModel.loading = { [unowned self] isLoading in
+            self.activityIndicator.isHidden = !isLoading
+        }
+    }
+    
     @objc private func didTapDelete() {
         viewModel.cleanHistory()
         tableView.reloadData()
@@ -60,12 +78,16 @@ public class NetworkAnalyzerViewController: UIViewController {
     
     private func setupConstraints() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
     
@@ -82,6 +104,11 @@ extension NetworkAnalyzerViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.items[indexPath.row]
         let viewController = makeNetworkAnalyzerDetailViewController(networkAnalyzer: item)
+        
+        
+      //  let viewController = JSONEditorViewController(networkAnalyzer: item)
+        
+        
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

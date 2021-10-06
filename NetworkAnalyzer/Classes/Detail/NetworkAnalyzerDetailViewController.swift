@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import WebKit
 
 enum SegmentRequestOptions: Int, CaseIterable {
     case header, query, request, response
@@ -30,6 +31,11 @@ enum SegmentRequestOptions: Int, CaseIterable {
 class NetworkAnalyzerDetailViewController: UIViewController {
     
     private let margin: CGFloat = 16
+    
+    private lazy var activityIndicator = UIActivityIndicatorView().apply {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.startAnimating()
+    }
     
     private lazy var stackUrlStatus: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
@@ -56,31 +62,18 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         return segmented
     }()
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
+    let preferences = WKPreferences().apply {
+        $0.javaScriptEnabled = true
+    }
+ 
+    lazy var configuration = WKWebViewConfiguration().apply {
+        $0.preferences = preferences
+    }
     
-    private let font: UIFont = .regular(16)
-    
-    private lazy var linesLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 5000
-        label.textColor = UIColor(red: 93/255, green: 114/255, blue: 166/255, alpha: 1.0)
-        label.font = font
-        return label
-    }()
-    
-    private lazy var labelJson: SRCopyableLabel = {
-        let label = SRCopyableLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 5000
-        label.isUserInteractionEnabled = true
-        label.font = font
-        return label
-    }()
+    lazy var webView = WKWebView(frame: .zero, configuration: configuration).apply {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .clear
+    }
     
     private let viewModel: NetworkAnalyzerDetailViewModel
     
@@ -100,8 +93,8 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         setupConstraints()
         setupSegmentedControl()
         
-//        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
-//        print("bbb", bbb)
+        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
+        print("bbb", bbb)
     }
     
     func humanReadableByteCount(bytes: Int) -> String {
@@ -137,11 +130,11 @@ class NetworkAnalyzerDetailViewController: UIViewController {
     }
 
     private func setupConstraints() {
+        view.addSubview(activityIndicator)
         view.addSubview(stackUrlStatus)
-        view.addSubview(scrollView)
+        view.addSubview(webView)
         view.addSubview(segmentedControl)
-        scrollView.addSubview(labelJson)
-        scrollView.addSubview(linesLabel)
+     
         NSLayoutConstraint.activate([
            
             stackUrlStatus.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: margin),
@@ -156,23 +149,17 @@ class NetworkAnalyzerDetailViewController: UIViewController {
             segmentedControl
                 .trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -margin),
             
-            scrollView.topAnchor
+            webView.topAnchor
                 .constraint(equalTo: segmentedControl.safeAreaLayoutGuide.bottomAnchor, constant: margin),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            linesLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10),
-            linesLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            linesLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            
-            labelJson.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            labelJson.leadingAnchor.constraint(equalTo: linesLabel.trailingAnchor, constant: 10),
-            labelJson.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            labelJson.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
+   
     private func setupSegmentedControl() {
         segmentedControl.selectedSegmentIndex = 0
         didChangeSegmented(segmentedControl)
@@ -183,7 +170,11 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         guard let option = SegmentRequestOptions(rawValue: sender.selectedSegmentIndex) else {
             return
         }
-        self.linesLabel.text = viewModel.makeLines(for: option)
-        labelJson.attributedText = viewModel.text(for: option).makeJsonAttributed()
+        
+        
+        let (contents, baseUrl) = viewModel.makeHTMLEditor(type: option, webviewHeight: webView.frame.height - 40)
+        webView.loadHTMLString(contents, baseURL: baseUrl)
+//        let html = viewModel.makeHTML(type: option)
+//        webView.loadHTMLString(html, baseURL: nil)
     }
 }
