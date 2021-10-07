@@ -11,7 +11,7 @@ import UIKit
 public class NetworkAnalyzer {
     
     static let bundle: Bundle = {
-        let bundleName = "Resources"
+        let bundleName = "NetworkAnalyzer"
         let bundle = Bundle(for: NetworkAnalyzer.self)
         
         guard let resourceBundleURL = bundle.url(forResource: bundleName, withExtension: "bundle") else {
