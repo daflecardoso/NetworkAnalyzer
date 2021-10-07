@@ -35,6 +35,7 @@ class NetworkAnalyzerDetailViewController: UIViewController {
     private lazy var activityIndicator = UIActivityIndicatorView().apply {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.startAnimating()
+        $0.isHidden = true
     }
     
     private lazy var stackUrlStatus: UIStackView = {
@@ -75,6 +76,19 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
+    private lazy var textView = UITextView().apply {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isEditable = false
+        $0.font = .menlo(14)
+        $0.backgroundColor = .clear
+    }
+    
+    private let native: Bool = true
+    
+    private lazy var rootView: UIView = {
+        return native ? textView : webView
+    }()
+    
     private let viewModel: NetworkAnalyzerDetailViewModel
     
     init(viewModel: NetworkAnalyzerDetailViewModel) {
@@ -93,8 +107,8 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         setupConstraints()
         setupSegmentedControl()
         
-        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
-        print("bbb", bbb)
+//        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
+//        print("bbb", bbb)
     }
     
     func humanReadableByteCount(bytes: Int) -> String {
@@ -132,7 +146,7 @@ class NetworkAnalyzerDetailViewController: UIViewController {
     private func setupConstraints() {
         view.addSubview(activityIndicator)
         view.addSubview(stackUrlStatus)
-        view.addSubview(webView)
+        view.addSubview(rootView)
         view.addSubview(segmentedControl)
      
         NSLayoutConstraint.activate([
@@ -149,11 +163,10 @@ class NetworkAnalyzerDetailViewController: UIViewController {
             segmentedControl
                 .trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -margin),
             
-            webView.topAnchor
-                .constraint(equalTo: segmentedControl.safeAreaLayoutGuide.bottomAnchor, constant: margin),
-            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            rootView.topAnchor.constraint(equalTo: segmentedControl.safeAreaLayoutGuide.bottomAnchor),
+            rootView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            rootView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            rootView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -171,9 +184,17 @@ class NetworkAnalyzerDetailViewController: UIViewController {
             return
         }
         
+        let start = DispatchTime.now()
+        textView.attributedText = viewModel.prettyText(type: option).makeJsonAttributedV2()
+        let end = DispatchTime.now()
         
-        let (contents, baseUrl) = viewModel.makeHTMLEditor(type: option, webviewHeight: webView.frame.height - 40)
-        webView.loadHTMLString(contents, baseURL: baseUrl)
+        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
+        let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
+
+        print("Time to evaluate problem \(option.title): \(timeInterval) seconds")
+        
+        let contents = viewModel.makeHTML(type: option)
+        webView.loadHTMLString(contents, baseURL: nil)
 //        let html = viewModel.makeHTML(type: option)
 //        webView.loadHTMLString(html, baseURL: nil)
     }

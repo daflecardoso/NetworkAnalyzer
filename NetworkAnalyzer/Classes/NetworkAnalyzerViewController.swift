@@ -58,8 +58,7 @@ public class NetworkAnalyzerViewController: UIViewController {
     }
 
     private func setupDeleteButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem.delete(target: self,
-                                                                   selector: #selector(didTapDelete))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapDelete))
     }
     
     private func setupBinds() {

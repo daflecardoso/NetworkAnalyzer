@@ -88,11 +88,11 @@ class ViewController: UIViewController {
 }
 """
         
-        let pathFile = Bundle.main.path(forResource: "categories", ofType: "json") ?? ""
+        let pathFile = Bundle.main.path(forResource: "home", ofType: "json") ?? ""
         let data = try? Data(contentsOf: URL(fileURLWithPath: pathFile))
         let json = String(data: data ?? Data(), encoding: .utf8) ?? ""
         
-        print(json)
+    //    print(json)
         
         let event = NetworkAnalyzerData(baseUrl: baseUrl,
                                         method: "GET",

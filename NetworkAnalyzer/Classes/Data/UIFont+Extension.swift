@@ -14,6 +14,10 @@ extension UIFont {
         return UIFont(name: name, size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
+    class func menlo(_ size: CGFloat) -> UIFont {
+        return self.fontBy(name: "Menlo", size: size)
+    }
+    
     class func regular(_ size: CGFloat) -> UIFont {
         //return self.fontBy(name: "SFProRounded-Regular", size: size)
         return .systemFont(ofSize: size, weight: .regular)

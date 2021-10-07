@@ -29,6 +29,10 @@ class NetworkAnalyzerDetailViewModel {
         }
     }
     
+    func prettyText(type: SegmentRequestOptions) -> String {
+        return text(for: type).data(using: .utf8)?.prettyPrintedJSONString ?? ""
+    }
+    
     func makeHTML(type: SegmentRequestOptions) -> String {
         return """
 <!doctype html>
@@ -58,60 +62,12 @@ class NetworkAnalyzerDetailViewModel {
 </html>
 """
     }
-    
-    func makeHTMLEditor(type: SegmentRequestOptions, webviewHeight: CGFloat) -> (String, URL) {
-        guard let filePath = NetworkAnalyzer.bundle.path(forResource: "json_preview", ofType: "html")
-        else {
-            // File Error
-            print ("File reading error")
-            return ("", URL(string: "")!)
-        }
-        
-        //let contents =  try? String(contentsOfFile: filePath, encoding: .utf8)
-        let baseUrl = URL(fileURLWithPath: filePath)
-        
-        
-        let contents = """
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <!-- when using the mode "code", it's important to specify charset utf-8 -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="jsoneditor.min.css" rel="stylesheet" type="text/css">
-    <script src="jsoneditor.min.js"></script>
-    <link href="darktheme.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-    <div style="width: 100%; height: \(webviewHeight)px;" id="jsoneditor"></div>
+}
 
-    <script>
-        // create the editor
-        const container = document.getElementById("jsoneditor")
-        const options = {
-            "mode": "code",
-            "modes": ['code', 'form', 'text', 'tree', 'view', 'preview'],
-            "search": false,
-            onEditable: function (node) {
-              if (!node.path) {
-                // In modes code and text, node is empty: no path, field, or value
-                // returning false makes the text area read-only
-                return false;
-              }
-            },
-        }
-        const editor = new JSONEditor(container, options)
-     
-        // set json
-        const initialJson = \(text(for: type))
-        editor.set(initialJson)
-    </script>
-</body>
-</html>
-"""
-        
-        return (contents, baseUrl)
-    }
+
+extension String {
+    
+//    func jsonAttributed() -> NSAttributedString {
+//        
+//    }
 }

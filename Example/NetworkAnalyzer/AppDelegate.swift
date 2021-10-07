@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //"\"[A-ú0-9]{1,}\"\\s{1}:\\s{1})"
+        let keyJsonGroups = """
+"type" : "somethig"
+""".capturedGroups(withRegex: "(\"[A-ú0-9-]{1,}\"\\s:\\s)")
+       
+        print(keyJsonGroups)
         return true
     }
 

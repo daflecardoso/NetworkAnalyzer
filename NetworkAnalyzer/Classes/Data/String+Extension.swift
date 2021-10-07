@@ -10,29 +10,29 @@ import UIKit
 
 extension String {
     
-    func capturedGroups(withRegex pattern: String) -> [String] {
+    public func capturedGroups(withRegex pattern: String) -> [String] {
         var results = [String]()
-
+        
         var regex: NSRegularExpression
         do {
             regex = try NSRegularExpression(pattern: pattern, options: [])
         } catch {
             return results
         }
-
+        
         let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.count))
-
+        
         guard let match = matches.first else { return results }
-
+        
         let lastRangeIndex = match.numberOfRanges - 1
         guard lastRangeIndex >= 1 else { return results }
-
+        
         for index in 1...lastRangeIndex {
             let capturedGroupIndex = match.range(at: index)
             let matchedString = (self as NSString).substring(with: capturedGroupIndex)
             results.append(matchedString)
         }
-
+        
         return results
     }
     
@@ -75,8 +75,7 @@ extension String {
             let keyJsonGroups = pieceJson.matches(for: "\"[A-z0-9-]{1,}\"\\s:\\s")
             let nullGroups = pieceJson.capturedGroups(withRegex: "(null,)")
             let numberGroups = pieceJson.capturedGroups(withRegex: "([0-9.]{1,},)")
-            let stringGroups = pieceJson
-                .capturedGroups(withRegex: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
+            let stringGroups = pieceJson.capturedGroups(withRegex: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
             let boolGroups = pieceJson.capturedGroups(withRegex: "(true,|false,)")
             
             let attributedString = NSMutableAttributedString(string: pieceJson, attributes: [
@@ -107,6 +106,66 @@ extension String {
             final.append(NSAttributedString(string: "\n"))
         }
         
+        return final
+    }
+    
+    func makeJsonAttributedV2(theme: JsonAttributedTheme = .default) -> NSMutableAttributedString {
+        let final = NSMutableAttributedString(string: "")
+        
+        var num = 0
+        
+        self.components(separatedBy: "\n").forEach { pieceJson in
+            
+            num = num + 1
+            
+            let keyJsonGroups = pieceJson.capturedGroups(withRegex: "(\"[A-ú0-9-]{1,}\"\\s:\\s)")
+//            let nullGroups = pieceJson.capturedGroups(withRegex: "(null,|null)")
+//            let numberGroups = pieceJson.capturedGroups(withRegex: "([0-9.]{1,},|[0-9.]{1,})")
+//            let stringGroups = pieceJson.capturedGroups(withRegex: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
+//            let boolGroups = pieceJson.capturedGroups(withRegex: "(true,|false,)")
+            
+//
+//            let keyJsonGroups = pieceJson.matches(for: "(\"[A-ú0-9-]{1,}\"\\s:\\s)")
+//            let nullGroups = pieceJson.matches(for: "(null,|null)")
+//            let numberGroups = pieceJson.matches(for: "([0-9.]{1,},)")
+//            let stringGroups = pieceJson.matches(for: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
+//            let boolGroups = pieceJson.matches(for: "(true,|false,)")
+//
+            let attributedString = NSMutableAttributedString(string: pieceJson, attributes: [
+                .foregroundColor: UIColor.whiteBlackNavigationTint,
+                .font: UIFont.menlo(14)
+            ])
+//            numberGroups.forEach { text in
+//                num = num + 1
+//                let range = (pieceJson as NSString).range(of: text)
+//                attributedString.addAttribute(.foregroundColor, value: theme.numberColor, range: range)
+//            }
+//            stringGroups.forEach { text in
+//                num = num + 1
+//                let range = (pieceJson as NSString).range(of: text)
+//                attributedString.addAttribute(.foregroundColor, value: theme.stringColor, range: range)
+//            }
+            keyJsonGroups.forEach { text in
+                num = num + 1
+                let range = (pieceJson as NSString).range(of: text)
+                attributedString.addAttribute(.foregroundColor, value: theme.keyJsonColor, range: range)
+            }
+//            nullGroups.forEach { text in
+//                num = num + 1
+//                let range = (pieceJson as NSString).range(of: text)
+//                attributedString.addAttribute(.foregroundColor, value: theme.nullColor, range: range)
+//            }
+//
+//            boolGroups.forEach { text in
+//                num = num + 1
+//                let range = (pieceJson as NSString).range(of: text)
+//                attributedString.addAttribute(.foregroundColor, value: theme.boolColor, range: range)
+//            }
+            final.append(attributedString)
+            final.append(NSAttributedString(string: "\n"))
+        }
+        
+        print("num", num)
         return final
     }
 }
