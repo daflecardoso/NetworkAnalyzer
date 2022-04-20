@@ -1,0 +1,10 @@
+{
+  "name": "NetworkAnalyzer",
+  "color": "#1476FF",
+  "showTutorial": false,
+  "scopes": [
+    "core",
+    "requests",
+    "detail"
+  ]
+}

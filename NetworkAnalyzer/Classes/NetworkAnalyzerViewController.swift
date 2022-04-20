@@ -72,7 +72,6 @@ public class NetworkAnalyzerViewController: UIViewController {
     
     @objc private func didTapDelete() {
         viewModel.cleanHistory()
-        tableView.reloadData()
     }
     
     private func setupConstraints() {
