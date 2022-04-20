@@ -29,6 +29,31 @@ class NetworkAnalyzerDetailViewModel {
         }
     }
     
+    func makeLogText() -> String {
+        let headers = text(for: .header)
+        let query = text(for: .query)
+        let request = text(for: .request)
+        let response = text(for: .response)
+        
+        return """
+URL: \(networkAnalyzer.absoluteUrl)
+
+Headers: \(headers)
+
+-----------------------------------------------------------------------------
+
+Query: \(query)
+
+-----------------------------------------------------------------------------
+
+Request: \(request)
+
+-----------------------------------------------------------------------------
+
+Response: \(response)
+"""
+    }
+    
     func prettyText(type: SegmentRequestOptions) -> String {
         return text(for: type).data(using: .utf8)?.prettyPrintedJSONString ?? ""
     }

@@ -23,7 +23,7 @@ enum SegmentRequestOptions: Int, CaseIterable {
             return "Request"
         case .response:
             return "Response"
-        
+            
         }
     }
 }
@@ -66,7 +66,7 @@ class NetworkAnalyzerDetailViewController: UIViewController {
     let preferences = WKPreferences().apply {
         $0.javaScriptEnabled = true
     }
- 
+    
     lazy var configuration = WKWebViewConfiguration().apply {
         $0.preferences = preferences
     }
@@ -107,8 +107,8 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         setupConstraints()
         setupSegmentedControl()
         
-//        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
-//        print("bbb", bbb)
+        //        let bbb = humanReadableByteCount(bytes: viewModel.networkAnalyzer.response.utf8.count)
+        //        print("bbb", bbb)
     }
     
     func humanReadableByteCount(bytes: Int) -> String {
@@ -126,6 +126,7 @@ class NetworkAnalyzerDetailViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .backgroundContainerViews
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
         navigationItem.titleView = UIStackView(arrangedSubviews: [
             UILabel().apply { label in
                 label.font = .bold(14)
@@ -142,15 +143,23 @@ class NetworkAnalyzerDetailViewController: UIViewController {
             $0.spacing = 8
         }
     }
-
+    
+    @objc private func didTapShare() {
+        let text = viewModel.makeLogText()
+        let shareAll = [text]
+        let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
     private func setupConstraints() {
         view.addSubview(activityIndicator)
         view.addSubview(stackUrlStatus)
         view.addSubview(rootView)
         view.addSubview(segmentedControl)
-     
+        
         NSLayoutConstraint.activate([
-           
+            
             stackUrlStatus.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: margin),
             stackUrlStatus.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: margin),
             stackUrlStatus.trailingAnchor
@@ -172,13 +181,13 @@ class NetworkAnalyzerDetailViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-   
+    
     private func setupSegmentedControl() {
         segmentedControl.selectedSegmentIndex = 0
         didChangeSegmented(segmentedControl)
     }
     
-   
+    
     @objc private func didChangeSegmented(_ sender: UISegmentedControl) {
         guard let option = SegmentRequestOptions(rawValue: sender.selectedSegmentIndex) else {
             return
@@ -190,12 +199,12 @@ class NetworkAnalyzerDetailViewController: UIViewController {
         
         let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
         let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
-
+        
         print("Time to evaluate problem \(option.title): \(timeInterval) seconds")
         
         let contents = viewModel.makeHTML(type: option)
         webView.loadHTMLString(contents, baseURL: nil)
-//        let html = viewModel.makeHTML(type: option)
-//        webView.loadHTMLString(html, baseURL: nil)
+        //        let html = viewModel.makeHTML(type: option)
+        //        webView.loadHTMLString(html, baseURL: nil)
     }
 }

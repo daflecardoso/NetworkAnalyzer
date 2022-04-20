@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NetworkAnalyzer'
-  s.version          = '1.5.0'
+  s.version          = '1.6.0'
   s.summary          = 'A Simple network analyzer.'
 
 # This description is used to generate tags and improve search results.

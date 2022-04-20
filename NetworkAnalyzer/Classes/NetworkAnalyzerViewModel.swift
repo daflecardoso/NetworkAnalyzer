@@ -17,12 +17,12 @@ public class NetworkAnalyzerViewModel {
     
     func fetch() {
         loading?(true)
-        DispatchQueue.global(qos: .background).async { [unowned self] in
+        DispatchQueue.global(qos: .background).async { [weak self] in
             let events: [NetworkAnalyzerData]? = Cache.shared.get(forKey: .networkEvents)
-            self.items = events ?? []
+            self?.items = events ?? []
             DispatchQueue.main.async {
-                loading?(false)
-                self.onFetched?()
+                self?.loading?(false)
+                self?.onFetched?()
             }
         }
     }
