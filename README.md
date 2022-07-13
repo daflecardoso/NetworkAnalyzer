@@ -1,4 +1,4 @@
-# NetworkAnalyzer 1.6.0
+# NetworkAnalyzer
 
 [![CI Status](https://img.shields.io/travis/daflecardoso/NetworkAnalyzer.svg?style=flat)](https://travis-ci.org/daflecardoso/NetworkAnalyzer)
 [![Version](https://img.shields.io/cocoapods/v/NetworkAnalyzer.svg?style=flat)](https://cocoapods.org/pods/NetworkAnalyzer)
