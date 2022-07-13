@@ -55,7 +55,9 @@ Response: \(response)
     }
     
     func prettyText(type: SegmentRequestOptions) -> String {
-        return text(for: type).data(using: .utf8)?.prettyPrintedJSONString ?? ""
+        let text = text(for: type)
+        let data = text.data(using: .utf8) ?? Data()
+        return data.isValidJson ? (data.prettyPrintedJSONString ?? "") : text
     }
     
     func makeHTML(type: SegmentRequestOptions) -> String {
