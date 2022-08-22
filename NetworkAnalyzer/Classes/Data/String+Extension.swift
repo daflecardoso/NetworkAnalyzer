@@ -119,48 +119,48 @@ extension String {
             num = num + 1
             
             let keyJsonGroups = pieceJson.capturedGroups(withRegex: "(\"[A-ú0-9-]{1,}\"\\s:\\s)")
-//            let nullGroups = pieceJson.capturedGroups(withRegex: "(null,|null)")
-//            let numberGroups = pieceJson.capturedGroups(withRegex: "([0-9.]{1,},|[0-9.]{1,})")
-//            let stringGroups = pieceJson.capturedGroups(withRegex: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
-//            let boolGroups = pieceJson.capturedGroups(withRegex: "(true,|false,)")
+            let nullGroups = pieceJson.capturedGroups(withRegex: "(null,|null)")
+            let numberGroups = pieceJson.capturedGroups(withRegex: "([0-9.]{1,},|[0-9.]{1,})")
+            let stringGroups = pieceJson.capturedGroups(withRegex: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
+            let boolGroups = pieceJson.capturedGroups(withRegex: "(true,|false,)")
             
-//
+
 //            let keyJsonGroups = pieceJson.matches(for: "(\"[A-ú0-9-]{1,}\"\\s:\\s)")
 //            let nullGroups = pieceJson.matches(for: "(null,|null)")
 //            let numberGroups = pieceJson.matches(for: "([0-9.]{1,},)")
 //            let stringGroups = pieceJson.matches(for: "(\\s\"[A-ú0-9!@#$%^&*()=\\s+\\-,.?\"://{}|<>]{1,}\")")
 //            let boolGroups = pieceJson.matches(for: "(true,|false,)")
-//
+
             let attributedString = NSMutableAttributedString(string: pieceJson, attributes: [
                 .foregroundColor: UIColor.whiteBlackNavigationTint,
                 .font: UIFont.menlo(14)
             ])
-//            numberGroups.forEach { text in
-//                num = num + 1
-//                let range = (pieceJson as NSString).range(of: text)
-//                attributedString.addAttribute(.foregroundColor, value: theme.numberColor, range: range)
-//            }
-//            stringGroups.forEach { text in
-//                num = num + 1
-//                let range = (pieceJson as NSString).range(of: text)
-//                attributedString.addAttribute(.foregroundColor, value: theme.stringColor, range: range)
-//            }
+            numberGroups.forEach { text in
+                num = num + 1
+                let range = (pieceJson as NSString).range(of: text)
+                attributedString.addAttribute(.foregroundColor, value: theme.numberColor, range: range)
+            }
+            stringGroups.forEach { text in
+                num = num + 1
+                let range = (pieceJson as NSString).range(of: text)
+                attributedString.addAttribute(.foregroundColor, value: theme.stringColor, range: range)
+            }
             keyJsonGroups.forEach { text in
                 num = num + 1
                 let range = (pieceJson as NSString).range(of: text)
                 attributedString.addAttribute(.foregroundColor, value: theme.keyJsonColor, range: range)
             }
-//            nullGroups.forEach { text in
-//                num = num + 1
-//                let range = (pieceJson as NSString).range(of: text)
-//                attributedString.addAttribute(.foregroundColor, value: theme.nullColor, range: range)
-//            }
-//
-//            boolGroups.forEach { text in
-//                num = num + 1
-//                let range = (pieceJson as NSString).range(of: text)
-//                attributedString.addAttribute(.foregroundColor, value: theme.boolColor, range: range)
-//            }
+            nullGroups.forEach { text in
+                num = num + 1
+                let range = (pieceJson as NSString).range(of: text)
+                attributedString.addAttribute(.foregroundColor, value: theme.nullColor, range: range)
+            }
+
+            boolGroups.forEach { text in
+                num = num + 1
+                let range = (pieceJson as NSString).range(of: text)
+                attributedString.addAttribute(.foregroundColor, value: theme.boolColor, range: range)
+            }
             final.append(attributedString)
             final.append(NSAttributedString(string: "\n"))
         }

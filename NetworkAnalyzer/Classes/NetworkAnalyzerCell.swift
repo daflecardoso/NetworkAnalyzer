@@ -98,6 +98,6 @@ class NetworkAnalyzerCell: UITableViewCell {
         baseUrlLabel.text = item.absoluteUrl
         statusCodeLabel.text = String(item.statusCode)
         statusCodeLabel.textColor = item.statusCodeColor
-        timeLabel.text = item.date.string("EEEE, dd MMMM 'de' yyyy 'às' HH:mm:ss")
+        timeLabel.text = item.date.string("EEEE, MMMM dd yyyy HH:mm:ss")
     }
 }

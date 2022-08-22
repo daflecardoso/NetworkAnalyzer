@@ -12,7 +12,7 @@ extension Date {
     
     func string(_ format: String) -> String {
         return DateFormatter().run { df in
-            df.locale = Locale(identifier: "pt_BR")
+            df.locale = Locale(identifier: "en_US")
             df.dateFormat = format
             return df.string(from: self)
         }
