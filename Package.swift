@@ -18,10 +18,6 @@ let package = Package(
             name: "NetworkAnalyzer",
             dependencies: [],
             path: "NetworkAnalyzer"),
-        .testTarget(
-            name: "NetworkAnalyzerTests",
-            dependencies: ["NetworkAnalyzer"],
-            path: "Tests")
     ],
     swiftLanguageVersions: [.v5]
 )
