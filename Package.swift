@@ -20,7 +20,7 @@ let package = Package(
         .target(
             name: "NetworkAnalyzer",
             dependencies: [],
-            path: "NetworkAnalyzer"),
+            path: "NetworkAnalyzer/Classes/**/*"),
     ],
     swiftLanguageVersions: [.v5]
 )
