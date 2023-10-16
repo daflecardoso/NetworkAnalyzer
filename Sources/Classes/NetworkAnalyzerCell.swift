@@ -16,7 +16,7 @@ class NetworkAnalyzerCell: UITableViewCell {
     private let methodLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bold(14)
+        label.font = .bold(16)
         label.layer.masksToBounds = true
         label.numberOfLines = 0
         return label
@@ -25,7 +25,7 @@ class NetworkAnalyzerCell: UITableViewCell {
     private let baseUrlLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .regular(12)
+        label.font = .medium(14)
         label.numberOfLines = 0
         return label
     }()
@@ -33,7 +33,7 @@ class NetworkAnalyzerCell: UITableViewCell {
     private let statusCodeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bold(12)
+        label.font = .bold(14)
         label.numberOfLines = 0
         return label
     }()
